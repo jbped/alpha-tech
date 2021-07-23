@@ -44,6 +44,7 @@ router.post("/", (req, res) => {
     //  username: "email address"
     //  password: "password" (will be hashed)
     // }
+
     Users.create({
         username: req.body.username,
         password: req.body.password
@@ -56,6 +57,12 @@ router.post("/", (req, res) => {
 
 // UPDATE USER BY ID
 router.put("/:id", (req, res) => {
+    // Obj Format
+    // {
+    //  username: "email address"
+    //  password: "password" (will be hashed)
+    // }
+    
     Users.update({
         username: req.body.username,
         password: req.body.password,
