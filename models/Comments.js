@@ -6,11 +6,11 @@ class Comments extends Model {}
 Comments.init(
     {
         text: {
-            types: DataTypes.TEXT,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         commenter_id: {
-            types: DataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
                 model: "users",
@@ -18,13 +18,16 @@ Comments.init(
             }
         },
         post_id: {
-            types: DataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
                 model: "posts",
                 key:"id"
             }
         }
+    },
+    {
+        sequelize
     }
 );
 

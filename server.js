@@ -2,7 +2,7 @@
 const express = require("express");
 const path = require("path");
 const session = require("express-session")
-// const routes = require("./controllers");
+const routes = require("./controllers");
 
 // express-handlebars npm
 const exphbs = require("express-handlebars");
@@ -27,6 +27,9 @@ const sess = {
 
 app.use(session(sess));
 
+// Use routes outlined in controllers folder
+app.use(routes);
+
 // handlebars setup
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -36,6 +39,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => console.log(`Now listening on ${PORT}`))
 })

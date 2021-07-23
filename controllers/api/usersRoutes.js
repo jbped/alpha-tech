@@ -3,7 +3,7 @@ const { Users, Posts, Comments } = require("../../models");
 
 // GET ALL USERS
 router.get("/", (req, res) => {
-    Users.findAll().then(data = res.json(data)).catch(err => {console.log(err); res.status(500).json(err);})
+    Users.findAll({}).then(data => res.json(data)).catch(err => {console.log(err); res.status(500).json(err);})
 });
 
 // GET USER BY ID INCLUDE POSTS AND COMMENTS
