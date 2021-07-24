@@ -4,7 +4,7 @@ const { User, Posts, Comments } = require("../../models");
 // GET ALL COMMENTS INCLUDE USER AND POST
 router.get("/", (req, res) => {
     Comments.findAll({
-        attributes: ["id", "title", "text", "created_at"],
+        attributes: ["id", "text", "created_at"],
         include: {
             model: Posts,
             attributes: ["id", "title", "created_at"]
@@ -20,7 +20,7 @@ router.get("/:id", (req, res) => {
         where: {
             id: req.params.id
         },
-        attributes: ["id", "title", "text", "created_at"],
+        attributes: ["id", "text", "created_at"],
         include: {
             model: Posts,
             attributes: ["id", "title", "text", "created_at"]
@@ -47,8 +47,8 @@ router.post("/", (req, res) => {
 
     Comments.create({
         text: req.body.text,
-        post_id: req.body.post_id,
-        author_id: req.body.author_id
+        commenter_id: req.body.commenter_id,
+        post_id: req.body.post_id
     })
     .then(data => {res.json(data)})
     .catch(err => { console.log(err); res.status(500).json(err); })
@@ -61,7 +61,7 @@ router.put("/:id", (req, res) => {
     //     text: (STR), "comment body/text here"
     // }
 
-    Comments.update({
+    Comments.update(req.body,{
         text: req.body.text,
         where: {
             id: req.params.id

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Posts, Comments } = require("../../models");
+const { Users, Posts, Comments } = require("../../models");
 
 // GET ALL POSTS INCLUDE USER AND COMMENTS
 router.get("/", (req, res) => {
@@ -12,6 +12,10 @@ router.get("/", (req, res) => {
             {
                 model: Comments,
                 attributes: ["id", "text", "created_at"],
+                include: {
+                    model: Users,
+                    attributes: ["id", "username"]
+                }
             }
         ]
     })
@@ -33,6 +37,10 @@ router.get("/:id", (req, res) => {
             {
                 model: Comments,
                 attributes: ["id", "text", "created_at"],
+                include: {
+                    model: Users,
+                    attributes: ["id", "username"]
+                }
             }
         ]
     })
@@ -71,9 +79,7 @@ router.put("/:id", (req, res) => {
     //     title: {STR}, //post title here//
     //     text: {STR}, //post body/text here//
     // }
-    Posts.update({
-        title: req.body.title,
-        text: req.body.text,
+    Posts.update(req.body, {
         where: {
             id: req.params.id
         }
