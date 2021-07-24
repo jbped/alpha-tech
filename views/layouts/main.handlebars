@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="has-background-grey-dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&#60;alpha-t3ch&#62;</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar is-dark">
+            <div class="navbar-brand">
+                <a href="/"
+                    class="navbar-item is-size-4 has-text-weight-semibold has-text-info">&#60;alpha-t3ch&#62;</a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarFull">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="navbar-menu" id="navbarFull">
+                <div class="navbar-start">
+                    <a href="/dashboard" class="navbar-item">dashboard</a>
+                    <a href="/account" class="navbar-item">edit account</a>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <button class="button is-info" id="button-signup">
+                                <strong>Sign up</strong>
+                            </button>
+                            <button class="button is-light" id="button-login">
+                                Log in
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    {{>signup}}
+    {{>login}}
+    {{{body}}}
+</body>
+<script src="/javascript/bulma.js"></script>
+<script src="/javascript/signup.js"></script>
+<script src="/javascript/login.js"></script>
+<script src="https://kit.fontawesome.com/e5db155810.js" crossorigin="anonymous"></script>
+
+</html>
