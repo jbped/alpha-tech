@@ -25,11 +25,6 @@ const sess = {
     })
 };
 
-app.use(session(sess));
-
-// Use routes outlined in controllers folder
-app.use(routes);
-
 // handlebars setup
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -39,6 +34,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-sequelize.sync({ force: false }).then(() => {
+app.use(session(sess));
+
+// Use routes outlined in controllers folder
+app.use(routes);
+
+sequelize.sync({ force: true }).then(() => {
     app.listen(PORT, () => console.log(`Now listening on ${PORT}`))
 })

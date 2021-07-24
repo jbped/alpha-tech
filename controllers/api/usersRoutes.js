@@ -21,7 +21,7 @@ router.get("/:id", (req, res) => {
                 model: Comments,
                 attributes: ["id", "text", "post_id", "created_at"],
                 include: {
-                    model: Post,
+                    model: Posts,
                     attributes: ["title"]
                 }
             }
@@ -41,10 +41,10 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
     // Obj Format
     // {
-    //  username: "email address"
-    //  password: "password" (will be hashed)
+    //  "username": "email address",
+    //  "password": "password" // will be hashed
     // }
-
+    console.log(req.body)
     Users.create({
         username: req.body.username,
         password: req.body.password
@@ -58,14 +58,12 @@ router.post("/", (req, res) => {
 // UPDATE USER BY ID
 router.put("/:id", (req, res) => {
     // Obj Format
-    // {
-    //  username: "email address"
-    //  password: "password" (will be hashed)
+    // {,
+    //  "password": "password" // will be hashed
     // }
     
-    Users.update({
-        username: req.body.username,
-        password: req.body.password,
+    Users.update(req.body, {
+        individualHooks: true,
         where: {
             id: req.params.id
         }

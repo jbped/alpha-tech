@@ -27,7 +27,8 @@ Comments.init(
         }
     },
     {
-        sequelize
+        sequelize,
+        underscored:true
     }
 );
 

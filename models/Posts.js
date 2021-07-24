@@ -23,7 +23,8 @@ Posts.init(
         }
     },
     {
-        sequelize
+        sequelize,
+        underscored:true
     }
 )
 
