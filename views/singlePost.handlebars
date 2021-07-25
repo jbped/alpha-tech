@@ -1,0 +1,25 @@
+<section class="section">
+    <article class="container">
+        <div class="box">
+                <p class="title is-4 mb-1">{{post.title}}</p>
+                <div class="is-inline-flex">
+                <p class="subtitle is-6">
+                    <a href="/user/activity/{{post.author_id}}">@{{post.User.username}}</a>
+                </p>
+                    {{#if edited}}
+                    <p class="pl-3 is-6">Last Edited: {{format_date post.created_at}}</p>
+                    {{else}}
+                    <p class="pl-3 is-6">Created: {{format_date post.created_at}}</p>
+                    {{/if}}
+                </div>
+            <hr class="mt-0">
+            <p class="px-5">{{post.text}}</p>
+        </div>
+        {{!-- Add feature to add a new comment if logged in --}}
+        <div class="container is-max-desktop">
+            {{#each post.Comments as |comment|}}
+            {{>comment comment}}
+            {{/each}}
+        </div>
+    </article>
+</section>
