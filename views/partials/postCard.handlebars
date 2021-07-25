@@ -1,0 +1,21 @@
+<div class="card my-3" post-id=`{{id}}`>
+    <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-4"><a class="title is-4" href=`/post/{{id}}`>{{title}}</a></p>
+                <p class="subtitle is-6">@{{User.username}}</p>
+            </div>
+        </div>
+        <div class="content">
+            {{format_truncate text textLimit}}
+        </div>
+    </div>
+    <div class="card-footer">
+        <p class="pl-3 py-2">Created: {{format_date created_at}}</p>
+        {{#if edited}}
+        <p class="pl-3 py-2">Last Edited: {{format_date created_at}}</p>
+        {{/if}}
+        <p class="ml-auto pr-3 py-2"><i class="far fa-comments"></i> {{comment_count}} {{format_plural "comment"
+            comment_count}}</p>
+    </div>
+</div>

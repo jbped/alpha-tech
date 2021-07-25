@@ -1,11 +1,13 @@
 // Node/Express setup
 const express = require("express");
 const path = require("path");
-const session = require("express-session")
+const session = require("express-session");
 const routes = require("./controllers");
+const helpers = require("./utils/helpers");
 
 // express-handlebars npm
 const exphbs = require("express-handlebars");
+const hbs = exphbs.create({ helpers })
 
 // express setup
 const app = express();
@@ -26,7 +28,7 @@ const sess = {
 };
 
 // handlebars setup
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
 // express middleware
