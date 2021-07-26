@@ -1,0 +1,19 @@
+<div class="section pt-0">
+  <div class="container">
+    <h2 class="is-size-3 has-text-info py-2">{{user.username}}'s Activity</h2>
+  </div>
+  <div class="tabs is-centered has-background-light">
+    <ul>
+      <li class="is-active"><a href="/user/{{user.id}}/activity/posts">Posts</a></li>
+      <li><a href="/user/{{user.id}}/activity/comments">Comments</a></li>
+    </ul>
+  </div>
+  <div class="section">
+    <div id="post-block" class="block">
+      {{#each user.Posts as |post|}}
+      {{> postCard post}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+<script src="/javascript/userActivity.js"></script>
