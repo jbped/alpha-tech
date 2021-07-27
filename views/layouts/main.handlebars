@@ -23,34 +23,47 @@
             </div>
             <div class="navbar-menu" id="navbarFull">
                 <div class="navbar-start">
+                    {{#if sessionInfo.loggedIn}}
                     <a href="/dashboard" class="navbar-item">dashboard</a>
                     <a href="/account" class="navbar-item">edit account</a>
+                    {{/if}}
                 </div>
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="buttons">
+                            {{#if sessionInfo.loggedIn}}
+                            <button class="button is-light" id="button-logout">
+                                logout
+                            </button>
+                            {{else}}
                             <button class="button is-info" id="button-signup">
                                 <strong>signup</strong>
                             </button>
                             <button class="button is-light" id="button-login">
                                 login
                             </button>
-                            <button class="button is-light" id="button-login">
-                                logout
-                            </button>
+                            {{/if}}
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
+    {{#if sessionInfo.loggedIn}}
+    {{>logout}}
+    {{else}}
     {{>signup}}
     {{>login}}
+    {{/if}}
     {{{body}}}
 </body>
 <script src="/javascript/bulma.js"></script>
-<script src="/javascript/signup.js"></script>
+{{#if sessionInfo.loggedIn}}
+<script src="/javascript/logout.js"></script>
+{{else}}
 <script src="/javascript/login.js"></script>
+<script src="/javascript/signup.js"></script>
+{{/if}}
 <script src="https://kit.fontawesome.com/e5db155810.js" crossorigin="anonymous"></script>
 
 </html>

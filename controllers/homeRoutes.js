@@ -14,6 +14,7 @@ router.get("/", (req, res) => {
             "updated_at",
             [sequelize.literal("(SELECT COUNT(*) FROM comments WHERE posts.id = comments.post_id)"), "comment_count"]
         ],
+        order: [["created_at", "DESC"]],
         include: [
             {
                 model: Users,
@@ -25,8 +26,11 @@ router.get("/", (req, res) => {
         const posts = data.map(post => post.get({ plain: true }));
         assist.postsObj(posts, 500)
         res.render("homepage", {
-            posts
-            // loggedIn:req.session.loggedIn
+            posts,
+            sessionInfo: {
+                loggedIn: req.session.loggedIn,
+                user_id: req.session.user_id
+            }
         })
     })
     .catch(err => {
@@ -73,7 +77,10 @@ router.get("/post/:id", (req, res) => {
         assist.onePostObj(post);
         res.render("singlePost", {
             post,
-            // loggedIn:req.session.loggedIn
+            sessionInfo: {
+                loggedIn: req.session.loggedIn,
+                user_id: req.session.user_id
+            }
         })
     })
     .catch(err => {
@@ -88,7 +95,10 @@ router.get("/user/:id/activity/", (req, res) => {
         // assist.onePostObj(post);
         res.render("userActivity/userActivity", {
             user,
-            // loggedIn:req.session.loggedIn
+            sessionInfo: {
+                loggedIn: req.session.loggedIn,
+                user_id: req.session.user_id
+            }
         })
     })
     .catch(err => {
@@ -102,7 +112,10 @@ router.get("/user/:id/activity/posts", (req, res) => {
         // assist.onePostObj(post);
         res.render("userActivity/userPosts", {
             user,
-            // loggedIn:req.session.loggedIn
+            sessionInfo: {
+                loggedIn: req.session.loggedIn,
+                user_id: req.session.user_id
+            }
         })
     })
     .catch(err => {
@@ -116,7 +129,10 @@ router.get("/user/:id/activity/comments", (req, res) => {
     .then(user => {
         res.render("userActivity/userComments", {
             user,
-            // loggedIn:req.session.loggedIn
+            sessionInfo: {
+                loggedIn: req.session.loggedIn,
+                user_id: req.session.user_id
+            }
         })
     })
     .catch(err => {

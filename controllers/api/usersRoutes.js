@@ -96,4 +96,47 @@ router.delete("/:id", (req, res) => {
     .catch(err => {console.log(err); res.status(500).json(err);})
 });
 
+
+// LOGIN VERIFICATION
+router.post("/login", (req, res) => {
+    Users.findOne({
+        where: {
+            username: req.body.username
+        }
+    })
+    .then(data => {
+        if (!data) {
+            res.status(400).json({ message: "An account with the provided email was not found."});
+            return;
+        }
+        const verifyPassword = data.checkPassword(req.body.password);
+        if (!verifyPassword){
+            res.status(400).json({ message: "Incorrect password!" });
+            return;
+        }
+
+        // DECLARE SESSION VARIABLES
+        req.session.save(() => {
+                req.session.user_id = data.id,
+                req.session.email = data.email;
+                req.session.username = data.username;
+                req.session.loggedIn = true;
+
+                res.json({ user: data, message: "You are now logged in!"})
+        });
+    });
+});
+
+// LOGOUT OF SESSION
+router.post("/logout", (req, res) => {
+    if(req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    }
+    else {
+        res.status(404).end()
+    }
+});
+
 module.exports = router;

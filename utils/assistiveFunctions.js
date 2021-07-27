@@ -24,4 +24,12 @@ onePostObj = (post, length) => {
     return post
 };
 
-module.exports = { postsObj, onePostObj }
+const withAuth = (req, res, next) => {
+    if (!req.session.user_id) {
+        res.redirect("/")
+    } else {
+        next();
+    }
+}
+
+module.exports = { postsObj, onePostObj, withAuth }
