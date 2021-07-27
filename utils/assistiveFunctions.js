@@ -19,8 +19,11 @@ postsObj = (posts, length) => {
     console.log(posts)
     return posts
 };
-onePostObj = (post, length) => {
-    postManipulation(post, length)
+onePostObj = (post, user_id) => {
+    postManipulation(post)
+    isAuthor(post, user_id)
+    isCommenter(post.Comments, user_id)
+    console.log(post)
     return post
 };
 
@@ -32,4 +35,22 @@ const withAuth = (req, res, next) => {
     }
 }
 
-module.exports = { postsObj, onePostObj, withAuth }
+const isAuthor = (post, user_id) => {
+    if (user_id === post.author_id) {
+        return post.isAuthor = true;
+    } else {
+        return post.isAuthor = false;
+    }
+}
+
+const isCommenter = (comments, user_id) => {
+    comments.forEach(comment => {
+        if (user_id === comment.commenter_id) {
+            return comment.isCommenter = true;
+        } else {
+            return comment.isCommenter = false;
+        }
+    })
+}
+
+module.exports = { postsObj, onePostObj, withAuth, isAuthor, isCommenter }

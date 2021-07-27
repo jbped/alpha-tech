@@ -41,8 +41,8 @@ router.post("/", (req, res) => {
     // Obj layout
     // {
     //     text: (STR), "comment body/text here"
+    //     commenter_id: (INT), "user id that is posting the comment"
     //     post_id: (INT), post id the comment is associated with"
-    //     author_id: (INT), "user id that is posting the comment"
     // }
 
     Comments.create({

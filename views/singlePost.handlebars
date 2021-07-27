@@ -1,25 +1,68 @@
-<section class="section">
+<section class="section" author-id="{{post.author_id}}" post-id="{{post.id}}">
     <article class="container">
         <div class="box">
+            <div id="post-container">
                 <p class="title is-4 mb-1">{{post.title}}</p>
                 <div class="is-inline-flex">
-                <p class="subtitle is-6">
-                    <a href="/user/{{post.author_id}}/activity/posts">@{{post.User.username}}</a>
-                </p>
+                    <p class="subtitle is-6">
+                        <a href="/user/{{post.author_id}}/activity/posts">@{{post.User.username}}</a>
+                    </p>
                     {{#if edited}}
                     <p class="pl-3 is-6">Last Edited: {{format_date post.created_at}}</p>
                     {{else}}
                     <p class="pl-3 is-6">Created: {{format_date post.created_at}}</p>
                     {{/if}}
                 </div>
-            <hr class="mt-0">
-            <p class="px-5">{{post.text}}</p>
+                <hr class="mt-0">
+                <p class="px-5">{{post.text}}</p>
+            </div>
+            {{#if post.isAuthor}}
+            <form class="field hidden" id="edit-form">
+                <label class="label">Title:</label>
+                <div class="control">
+                    <input type="text" class="input" id="edited-title" value="{{post.title}}">
+                </div>
+                <label class="label">Post Body:</label>
+                <div class="control">
+                    <input type="text" class="input" id="edited-text" value="{{post.text}}">
+                </div>
+                <div class="field pt-3 is-grouped">
+                    <div class="control">
+                        <button class="button is-info" id="update-post" type="submit">Update</button>
+                    </div>
+                    <p class="control">
+                        <button class="button is-danger" id="cancel-update" type="button">Cancel</button>
+                    </p>
+                </div>
+            </form>
+            <button class="button is-info mt-4" id="edit-button">Edit</button>
+            {{/if}}
         </div>
-        {{!-- Add feature to add a new comment if logged in --}}
         <div class="container is-max-desktop">
+            {{#if sessionInfo.loggedIn}}
+            <div class="box">
+                <form class="field" id="comment-form" commenter_id="{{sessionInfo.user_id}}">
+                    <label class="label">Add new comment:</label>
+                    <div class="control">
+                        <input type="text" class="input" id="comment-text">
+                    </div>
+                    <div class="field pt-3">
+                        <div class="control">
+                            <button class="button is-info" id="submit-comment">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {{/if}}
             {{#each post.Comments as |comment|}}
             {{>comment comment}}
             {{/each}}
         </div>
     </article>
 </section>
+{{#if sessionInfo.loggedIn}}
+<script src="/javascript/comment.js"></script>
+{{/if}}
+{{#if post.isAuthor}}
+<script src="/javascript/editPost.js"></script>
+{{/if}}

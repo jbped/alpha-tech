@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Users, Posts, Comments } = require("../../models");
-
+const { withAuth } = require("../../utils/assistiveFunctions");
 // GET ALL USERS
 router.get("/", (req, res) => {
     Users.findAll({}).then(data => res.json(data)).catch(err => {console.log(err); res.status(500).json(err);})
@@ -57,7 +57,7 @@ router.post("/", (req, res) => {
 });
 
 // UPDATE USER BY ID
-router.put("/:id", (req, res) => {
+router.put("/:id", withAuth, (req, res) => {
     // Obj Format
     // {,
     //  "password": "password" // will be hashed
@@ -80,7 +80,7 @@ router.put("/:id", (req, res) => {
 });
 
 // DELETE USER BY ID
-router.delete("/:id", (req, res) => {
+router.delete("/:id", withAuth, (req, res) => {
     Users.destroy({
         where: {
             id: req.params.id
@@ -128,7 +128,7 @@ router.post("/login", (req, res) => {
 });
 
 // LOGOUT OF SESSION
-router.post("/logout", (req, res) => {
+router.post("/logout", withAuth, (req, res) => {
     if(req.session.loggedIn) {
         req.session.destroy(() => {
             res.status(204).end();

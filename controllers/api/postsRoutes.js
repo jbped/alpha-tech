@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { Users, Posts, Comments } = require("../../models");
-
+const { withAuth } = require("../../utils/assistiveFunctions");
 // GET ALL POSTS INCLUDE USER AND COMMENTS
 router.get("/", (req, res) => {
     Posts.findAll({
@@ -55,7 +55,7 @@ router.get("/:id", (req, res) => {
 });
 
 // CREATE NEW POST INCLUDE USER AND COMMENTS
-router.post("/", (req, res) => {
+router.post("/", withAuth, (req, res) => {
     // Obj layout
     // {
     //     title: {STR}, //post title here//
@@ -73,7 +73,7 @@ router.post("/", (req, res) => {
 });
 
 // UPDATE POST BY ID INCLUDE USER AND COMMENTS
-router.put("/:id", (req, res) => {
+router.put("/:id", withAuth, (req, res) => {
     // Obj layout
     // {
     //     title: {STR}, //post title here//
@@ -95,7 +95,7 @@ router.put("/:id", (req, res) => {
 });
 
 // DELETE POST BY ID INCLUDE USER AND COMMENTS
-router.delete("/:id", (req, res) => {
+router.delete("/:id", withAuth, (req, res) => {
     Posts.delete({
         where: {
             id: req.params.id

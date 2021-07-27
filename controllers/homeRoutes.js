@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
 const { Posts, Users, Comments } = require("../models");
-const assist = require("../utils/assistiveFunctions")
+const assist = require("../utils/assistiveFunctions");
 
 router.get("/", (req, res) => {
     Posts.findAll({
@@ -53,6 +53,9 @@ router.get("/post/:id", (req, res) => {
             "updated_at",
             [sequelize.literal("(SELECT COUNT(*) FROM comments WHERE posts.id = comments.post_id)"), "comment_count"]
         ],
+        order: [
+            [Comments, "created_at", "DESC"]
+        ],
         include: [
             {
                 model: Users,
@@ -61,6 +64,7 @@ router.get("/post/:id", (req, res) => {
             {
                 model: Comments,
                 attributes: ["id", "commenter_id", "text", "created_at", "updated_at"],
+               
                 include: {
                     model: Users,
                     attributes: ["id", "username"]
@@ -74,12 +78,14 @@ router.get("/post/:id", (req, res) => {
             return;
         }
         const post = data.get({ plain: true });
-        assist.onePostObj(post);
+        const user_id =  req.session.user_id
+        assist.onePostObj(post, user_id);
+        console.log(post)
         res.render("singlePost", {
             post,
             sessionInfo: {
                 loggedIn: req.session.loggedIn,
-                user_id: req.session.user_id
+                user_id
             }
         })
     })
