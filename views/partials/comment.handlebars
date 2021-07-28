@@ -1,10 +1,33 @@
-<div class="card my-3" post-id="{{id}}" commenter-id="{{commenter_id}}">
+<div class="card my-3" post-id="{{post_id}}" commenter-id="{{commenter_id}}">
     <div class="card-header">
         <p class="title is-5 pl-3 py-2"><a href="/user/{{commenter_id}}/activity/comments">@{{User.username}} said:</a></p>
     </div>
     <div class="card-content">
-        <div class="content">
+        <div class="content" comment-id="{{id}}">
+            <div class="comment-container">
             {{text}}
+            </div>
+
+        {{#if isCommenter}}
+            <form class="field hidden" id="edit-form" comment-form="{{id}}">
+                <label class="label">Comment:</label>
+                <div class="control">
+                    <input type="text" class="input" id="edited-text" value="{{text}}">
+                </div>
+                <div class="field pt-3 is-grouped">
+                    <div class="control">
+                        <button class="button is-info" id="update-post" type="submit">Update</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-danger" id="cancel-update" type="button">Delete</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-light" id="cancel-update" type="button">Cancel</button>
+                    </div>
+                </div>
+            </form>
+            <button class="button is-info mt-4 edit-comment-button">Edit</button>
+            {{/if}}
         </div>
     </div>
     <div class="card-footer">

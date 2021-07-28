@@ -63,7 +63,7 @@ router.get("/post/:id", (req, res) => {
             }, 
             {
                 model: Comments,
-                attributes: ["id", "commenter_id", "text", "created_at", "updated_at"],
+                attributes: ["id", "commenter_id", "post_id", "text", "created_at", "updated_at"],
                
                 include: {
                     model: Users,

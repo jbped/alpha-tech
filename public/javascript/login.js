@@ -16,7 +16,7 @@ function closeLoginModal (event){
     loginModal.classList.remove("is-active");
 }
 
-async function loginHandler(event) {
+async function loginHandler() {
     const username = document.querySelector("#username-login").value.trim();
     const password = document.querySelector("#password-login").value.trim();
 
@@ -30,7 +30,7 @@ async function loginHandler(event) {
             headers: { "Content-Type":"application/json"}
         })
         if(response.ok) {
-            document.location.replace("/dashboard")
+            document.location.reload()
             console.log("Logged in")
         } else {
             alert(response.statusText)
