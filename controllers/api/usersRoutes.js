@@ -41,7 +41,8 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
     // Obj Format
     // {
-    //  "username": "email address",
+    //  "username": "username",
+    //  "email": "email address"
     //  "password": "password" // will be hashed
     // }
     console.log(req.body)
@@ -105,6 +106,7 @@ router.post("/login", (req, res) => {
         }
     })
     .then(data => {
+        console.log(data)
         if (!data) {
             res.status(400).json({ message: "An account with the provided email was not found."});
             return;

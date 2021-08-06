@@ -80,7 +80,7 @@ router.get("/post/:id", (req, res) => {
         const post = data.get({ plain: true });
         const user_id =  req.session.user_id
         assist.onePostObj(post, user_id);
-        console.log(post)
+        // console.log(post)
         res.render("singlePost", {
             post,
             sessionInfo: {
@@ -98,13 +98,21 @@ router.get("/post/:id", (req, res) => {
 router.get("/user/:id/activity/", (req, res) => {
     userFindOne(req, res)
     .then(user => {
-        // assist.onePostObj(post);
+        if (req.session.user_id === user.id) {
+            user.user_match = true
+        } else {
+            user.user_match = false
+        }
+        const sessionInfo = {
+            loggedIn: req.session.loggedIn,
+            user_id: req.session.user_id
+        }
+        console.log(user)
+        console.log(sessionInfo)
+
         res.render("userActivity/userActivity", {
             user,
-            sessionInfo: {
-                loggedIn: req.session.loggedIn,
-                user_id: req.session.user_id
-            }
+            sessionInfo
         })
     })
     .catch(err => {
@@ -112,33 +120,43 @@ router.get("/user/:id/activity/", (req, res) => {
         res.status(500).json(err);
     })
 });
-router.get("/user/:id/activity/posts", (req, res) => {
-    userFindOne(req, res)
-    .then(user => {
-        // assist.onePostObj(post);
-        res.render("userActivity/userPosts", {
-            user,
-            sessionInfo: {
-                loggedIn: req.session.loggedIn,
-                user_id: req.session.user_id
-            }
-        })
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    })
-});
+// router.get("/user/:id/activity/posts", (req, res) => {
+//     userFindOne(req, res)
+//     .then(user => {
+//         // assist.onePostObj(post);
+//         res.render("userActivity/userPosts", {
+//             user,
+//             sessionInfo: {
+//                 loggedIn: req.session.loggedIn,
+//                 user_id: req.session.user_id
+//             }
+//         })
+//     })
+//     .catch(err => {
+//         console.log(err);
+//         res.status(500).json(err);
+//     })
+// });
 
 router.get("/user/:id/activity/comments", (req, res) => {
     userFindOne(req, res)
     .then(user => {
+        if (req.session.user_id === user.id) {
+            user.user_match = true
+        } else {
+            user.user_match = false
+        }
+
+        const sessionInfo = {
+            loggedIn: req.session.loggedIn,
+            user_id: req.session.user_id
+        }
+        console.log(user)
+        console.log(sessionInfo)
+
         res.render("userActivity/userComments", {
             user,
-            sessionInfo: {
-                loggedIn: req.session.loggedIn,
-                user_id: req.session.user_id
-            }
+            sessionInfo
         })
     })
     .catch(err => {

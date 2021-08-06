@@ -2,33 +2,35 @@
     <div class="modal-background" id="signup-background"></div>
     <div class="modal-content">
         <div class="box px-6 py-5">
-            <p class="is-size-5">Signup:</p>
-            </br>
-            <div class="field">
-                <label class="label">Username:</label>
-                <div class="control">
-                    <input type="text" id="username" class="input" placeholder="e.g. ID_10_T">
+            <form id="signup-form">
+                <p class="is-size-5">Signup:</p>
+                </br>
+                <div class="field">
+                    <label class="label">Username:</label>
+                    <div class="control">
+                        <input type="text" id="username-input" class="input" placeholder="e.g. ID_10_T">
+                    </div>
                 </div>
-            </div>
-            <div class="field">
-                <label class="label">Email:</label>
-                <div class="control">
-                    <input type="email" id="email" class="input" placeholder="e.g. example@email.com">
+                <div class="field">
+                    <label class="label">Email:</label>
+                    <div class="control">
+                        <input type="email" id="email-input" class="input" placeholder="e.g. example@email.com">
+                    </div>
                 </div>
-            </div>
-            <div class="field">
-                <label class="label">Password</label>
-                <div class="control">
-                    <input class="input" id="password" type="password" placeholder="********">
+                <div class="field">
+                    <label class="label">Password</label>
+                    <div class="control">
+                        <input class="input" id="password-input" type="password" placeholder="********">
+                    </div>
                 </div>
-            </div>
-            <div class="field is-grouped">
-                <p class="control">
-                    <button class="button is-info">signup</button>
-                </p>
-                <p class="control">
-                    <button class="button is-danger" id="close-signup-modal">cancel</button>
-                </p>
+                <div class="field is-grouped">
+                    <p class="control">
+                        <button type="submit" class="button is-info">signup</button>
+                    </p>
+                    <p class="control">
+                        <button class="button is-danger" id="close-signup-modal">cancel</button>
+                    </p>
+            </form>
             </div>
         </div>
     </div>

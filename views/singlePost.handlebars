@@ -1,4 +1,4 @@
-<section class="section" author-id="{{post.author_id}}" post-id="{{post.id}}">
+<section class="section" author-id="{{post.author_id}}" post-id="{{post.id}}" id="single-post-section">
     <article class="container">
         <div class="box">
             <div id="post-container">
@@ -28,14 +28,21 @@
                 </div>
                 <div class="field pt-3 is-grouped">
                     <div class="control">
-                        <button class="button is-info" id="update-post" type="submit">Update</button>
+                        <button class="button is-info" id="update-post" type="submit">update</button>
                     </div>
                     <p class="control">
-                        <button class="button is-danger" id="cancel-update" type="button">Cancel</button>
+                        <button class="button is-danger" id="cancel-update" type="button">cancel</button>
                     </p>
                 </div>
             </form>
-            <button class="button is-info mt-4" id="edit-button">Edit</button>
+            <div class="field pt-3 is-grouped" id="edit-btns-div">
+                <div class="control">
+                    <button class="button is-info mt-4" id="edit-button">edit</button>
+                </div>
+                <p class="control">
+                    <button class="button is-danger mt-4" id="delete-button">delete</button>
+                </p>
+            </div>
             {{/if}}
         </div>
         <div class="container is-max-desktop">
@@ -48,7 +55,7 @@
                     </div>
                     <div class="field pt-3">
                         <div class="control">
-                            <button class="button is-info" id="submit-comment">Submit</button>
+                            <button class="button is-info" id="submit-comment">submit</button>
                         </div>
                     </div>
                 </form>

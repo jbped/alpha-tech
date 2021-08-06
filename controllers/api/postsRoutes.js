@@ -96,7 +96,7 @@ router.put("/:id", withAuth, (req, res) => {
 
 // DELETE POST BY ID INCLUDE USER AND COMMENTS
 router.delete("/:id", withAuth, (req, res) => {
-    Posts.delete({
+    Posts.destroy({
         where: {
             id: req.params.id
         }
