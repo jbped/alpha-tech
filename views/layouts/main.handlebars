@@ -26,7 +26,8 @@
                 <div class="navbar-start">
                     {{#if sessionInfo.loggedIn}}
                     <a href="/user/{{sessionInfo.user_id}}/activity" class="navbar-item">dashboard</a>
-                    <a href="/account" class="navbar-item">edit account</a>
+                    {{else}}
+                    <a type="button" id="not-logged-in-dashboard" class="navbar-item">dashboard</a>
                     {{/if}}
                 </div>
                 <div class="navbar-end">
@@ -49,6 +50,18 @@
                 </div>
             </div>
         </nav>
+        {{#unless sessionInfo.loggedIn}}
+        <div class="notification is-danger is-hidden" id="not-logged-in-error">
+            <button class="delete"></button>
+            You are not logged in. Please either <strong>log into your account or signup</strong>
+        </div>
+        {{/unless}}
+        {{#if sessionInfo.loggedOut}}
+        <div class="notification is-danger" id="logged-out-error">
+            <button class="delete"></button>
+            You have been logged out due to inactivity. Please log back in.
+        </div>
+        {{/if}}
     </header>
     {{#if sessionInfo.loggedIn}}
     {{>logout}}
@@ -69,4 +82,5 @@
 {{#if user.user_match}}
 <script src="/javascript/newPost.js"></script>
 {{/if}}
+
 </html>

@@ -20,7 +20,7 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const sess = {
     secret: "can you keep a little secret?",
     cookie: {
-        // maxAge: 1000*60 //one minute
+        maxAge: 1000*60*20 //twenty minutes
     },
     resave: false,
     saveUnitialized: true,
@@ -28,6 +28,8 @@ const sess = {
         db:sequelize
     })
 };
+
+app.use(session(sess));
 
 // handlebars setup
 app.engine("handlebars", hbs.engine);
@@ -37,8 +39,6 @@ app.set("view engine", "handlebars");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use(session(sess));
 
 // Use routes outlined in controllers folder
 app.use(routes);

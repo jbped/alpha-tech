@@ -32,7 +32,7 @@ async function signupHandler() {
             headers: { "Content-Type":"application/json"}
         })
         if(response.ok) {
-            document.location.reload()
+            document.location.replace("/")
             console.log("signed up")
         } else {
             alert(response.statusText)

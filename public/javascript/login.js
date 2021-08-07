@@ -2,15 +2,17 @@ const loginOpen = document.querySelector("#button-login");
 const loginClose = document.querySelector("#close-login-modal");
 const loginModal = document.querySelector("#login-modal");
 const loginModalBackground = document.querySelector("#login-background");
-const loginBtn = document.querySelector("#login-btn")
+const loginBtn = document.querySelector("#login-btn");
 
-function openLoginModal (event){
+const fakeDashboard = document.querySelector("#not-logged-in-dashboard");
+
+function openLoginModal(event) {
     event.preventDefault()
     console.log("login clicked");
     loginModal.classList.add("is-active");
 }
 
-function closeLoginModal (event){
+function closeLoginModal(event) {
     event.preventDefault()
     console.log("close clicked");
     loginModal.classList.remove("is-active");
@@ -22,14 +24,14 @@ async function loginHandler() {
 
     if (username && password) {
         const response = await fetch("/api/users/login", {
-            method:"post",
+            method: "post",
             body: JSON.stringify({
                 username,
                 password
             }),
-            headers: { "Content-Type":"application/json"}
+            headers: { "Content-Type": "application/json" }
         })
-        if(response.ok) {
+        if (response.ok) {
             document.location.reload()
             console.log("Logged in")
         } else {
@@ -38,8 +40,20 @@ async function loginHandler() {
     }
 }
 
+function unhideError(event) {
+    event.preventDefault()
+    document.querySelector("#not-logged-in-error").classList.remove("is-hidden");
+}
+
 loginOpen.addEventListener("click", openLoginModal);
 loginClose.addEventListener("click", closeLoginModal);
 loginModalBackground.addEventListener("click", closeLoginModal);
 
 loginBtn.addEventListener("click", loginHandler);
+fakeDashboard.addEventListener("click", unhideError)
+
+
+document.querySelector('.delete').addEventListener("click", () => { 
+    console.log("delete clicked")
+    document.querySelector("#not-logged-in-error").classList.add("is-hidden");
+})

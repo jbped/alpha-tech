@@ -49,31 +49,76 @@ const editCommentHandler = (event) => {
     const currentComment = editBtn.parentElement.firstElementChild
     const commentId = editBtn.parentElement.getAttribute("comment-id")
     const editForm = editBtn.previousElementSibling;
-    const deleteBtn = editForm.children[2].children[1].firstElementChild
-    console.log(editBtn)
-    console.log(commentId)
-    console.log(currentComment)
-    console.log(editForm)
-    console.log(deleteBtn)
+    const deleteBtn = editForm[2]
+    const cancelBtn = editForm[3]
+    const editInput = editForm[0]
+    // const cancelBtn
+    // console.log(event)
+    // console.log(editBtn)
+    // console.log(commentId)
+    // console.log(currentComment)
+    // console.log(editForm)
+    // console.log(deleteBtn)
     
     currentComment.classList.add("hidden");
     editForm.classList.remove("hidden");
     editBtn.classList.add("hidden");
     editForm.addEventListener("submit", submitCommentEdit);
     deleteBtn.addEventListener("click", deleteCommentHandler)
+    cancelBtn.addEventListener("click", cancelCommentEditHandler)
 }
 
-function submitCommentEdit (event) {
-    event.preventDefault();
+async function submitCommentEdit (event) {
+    event.preventDefault()
+
     const commentId = event.target.getAttribute("comment-form")
-    console.log(commentId);
+    const commentText = event.target[0].value.trim()
+    // console.log(commentId);
+    // console.log(commentText);
+
+    if (commentText && commentId) {
+        const response = await fetch(`/api/comments/${commentId}`, {
+            method: "PUT",
+            body: JSON.stringify({
+                text: commentText
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        if (response.ok) {
+            document.location.reload()
+        } else {
+            alert(response.statusText)
+        }
+    }
+}
+async function deleteCommentHandler (event) {
+    event.preventDefault()
+
+    const commentId = event.target.parentElement.parentElement.parentElement.getAttribute("comment-form")
+
+    const response = await fetch(`/api/comments/${commentId}`, {
+        method: "DELETE",
+    })
+    if (response.ok) {
+        document.location.reload();
+    } else {
+        alert(response.statusText)
+    }
+}
+function cancelCommentEditHandler (event) {
+    event.preventDefault()
+
+    const editForm = event.target.parentElement.parentElement.parentElement
+    const editBtn = editForm.nextElementSibling
+    const currentComment = editForm.parentElement.firstElementChild
+
+    currentComment.classList.remove("hidden");
+    editForm.classList.add("hidden");
+    editBtn.classList.remove("hidden");
 }
 
-function submitCommentEdit (event) {
-    event.preventDefault();
-    const commentId = event.target.getAttribute("comment-form")
-    console.log(commentId);
-}
 
 commentForm.addEventListener("submit", commentHandler)
 for(let i = 0; i < editBtns.length; i++){

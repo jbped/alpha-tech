@@ -45,14 +45,23 @@ router.post("/", (req, res) => {
     //  "email": "email address"
     //  "password": "password" // will be hashed
     // }
-    console.log(req.body)
     Users.create({
         username: req.body.username,
         email: req.body.email,
         password: req.body.password
     })
     .then(data => {
-        res.json(data)
+        console.log(req.session)
+        req.session.save(() => {
+            req.session.user_id = data.id,
+            req.session.email = data.email;
+            req.session.username = data.username;
+            req.session.loggedIn = true;
+
+            res.json(data)
+            console.log(req.session)
+        })
+        console.log(req.session)
     })
     .catch(err => {console.log(err); res.status(500).json(err);});
 });
@@ -103,6 +112,9 @@ router.post("/login", (req, res) => {
     Users.findOne({
         where: {
             username: req.body.username
+        },
+        attributes: {
+            except: "password"
         }
     })
     .then(data => {
@@ -116,7 +128,7 @@ router.post("/login", (req, res) => {
             res.status(400).json({ message: "Incorrect password!" });
             return;
         }
-
+        console.log(req.session)
         // DECLARE SESSION VARIABLES
         req.session.save(() => {
                 req.session.user_id = data.id,
@@ -125,8 +137,10 @@ router.post("/login", (req, res) => {
                 req.session.loggedIn = true;
 
                 res.json({ user: data, message: "You are now logged in!"})
+                console.log(req.session)
         });
-    });
+        console.log(req.session)
+    })
 });
 
 // LOGOUT OF SESSION

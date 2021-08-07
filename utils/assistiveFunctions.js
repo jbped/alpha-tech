@@ -16,14 +16,14 @@ postsObj = (posts, length) => {
     posts.forEach(post => {
         postManipulation(post, length)
     })
-    console.log(posts)
+    // console.log(posts)
     return posts
 };
 onePostObj = (post, user_id) => {
     postManipulation(post)
     isAuthor(post, user_id)
     isCommenter(post.Comments, user_id)
-    console.log(post)
+    // console.log(post)
     return post
 };
 

@@ -4,39 +4,40 @@ const { Posts, Users, Comments } = require("../models");
 const assist = require("../utils/assistiveFunctions");
 
 router.get("/", (req, res) => {
-    Posts.findAll({
-        attributes: [
-            "id",
-            "title",
-            "text",
-            "author_id",
-            "created_at",
-            "updated_at",
-            [sequelize.literal("(SELECT COUNT(*) FROM comments WHERE posts.id = comments.post_id)"), "comment_count"]
-        ],
-        order: [["created_at", "DESC"]],
-        include: [
-            {
-                model: Users,
-                attributes: ["id", "username"]
-            }
-        ]
-    })
-    .then(data => {
-        const posts = data.map(post => post.get({ plain: true }));
-        assist.postsObj(posts, 500)
-        res.render("homepage", {
-            posts,
-            sessionInfo: {
-                loggedIn: req.session.loggedIn,
-                user_id: req.session.user_id
-            }
+        Posts.findAll({
+            attributes: [
+                "id",
+                "title",
+                "text",
+                "author_id",
+                "created_at",
+                "updated_at",
+                [sequelize.literal("(SELECT COUNT(*) FROM comments WHERE posts.id = comments.post_id)"), "comment_count"]
+            ],
+            order: [["created_at", "DESC"]],
+            include: [
+                {
+                    model: Users,
+                    attributes: ["id", "username"]
+                }
+            ]
         })
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    })
+        .then(data => {
+            const posts = data.map(post => post.get({ plain: true }));
+            assist.postsObj(posts, 500)
+                res.render("homepage", {
+                    posts,
+                    sessionInfo: {
+                        loggedIn: req.session.loggedIn,
+                        user_id: req.session.user_id
+                    }
+                })
+            })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        })
+    
 });
 
 router.get("/post/:id", (req, res) => {
@@ -96,6 +97,7 @@ router.get("/post/:id", (req, res) => {
 });
 
 router.get("/user/:id/activity/", (req, res) => {
+    req.session.cookie.maxAge = 1000*60
     userFindOne(req, res)
     .then(user => {
         if (req.session.user_id === user.id) {
@@ -107,8 +109,8 @@ router.get("/user/:id/activity/", (req, res) => {
             loggedIn: req.session.loggedIn,
             user_id: req.session.user_id
         }
-        console.log(user)
-        console.log(sessionInfo)
+        // console.log(user)
+        // console.log(sessionInfo)
 
         res.render("userActivity/userActivity", {
             user,
@@ -139,6 +141,7 @@ router.get("/user/:id/activity/", (req, res) => {
 // });
 
 router.get("/user/:id/activity/comments", (req, res) => {
+    req.session.cookie.maxAge = 1000*60
     userFindOne(req, res)
     .then(user => {
         if (req.session.user_id === user.id) {
@@ -151,8 +154,8 @@ router.get("/user/:id/activity/comments", (req, res) => {
             loggedIn: req.session.loggedIn,
             user_id: req.session.user_id
         }
-        console.log(user)
-        console.log(sessionInfo)
+        // console.log(user)
+        // console.log(sessionInfo)
 
         res.render("userActivity/userComments", {
             user,
