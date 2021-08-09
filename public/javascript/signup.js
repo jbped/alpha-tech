@@ -16,7 +16,8 @@ function closeSignupModal (event){
     signupModal.classList.remove("is-active");
 }
 
-async function signupHandler() {
+async function signupHandler(event) {
+    event.preventDefault();
     const username = document.querySelector("#username-input").value.trim();
     const email = document.querySelector("#email-input").value.trim();
     const password = document.querySelector("#password-input").value.trim();
@@ -31,8 +32,9 @@ async function signupHandler() {
             }),
             headers: { "Content-Type":"application/json"}
         })
+        console.log(response)
         if(response.ok) {
-            document.location.replace("/")
+            document.location.reload()
             console.log("signed up")
         } else {
             alert(response.statusText)

@@ -5,7 +5,7 @@
                 <p class="title is-4 mb-1">{{post.title}}</p>
                 <div class="is-inline-flex">
                     <p class="subtitle is-6">
-                        <a href="/user/{{post.author_id}}/activity/posts">@{{post.User.username}}</a>
+                        <a href="/user/{{post.author_id}}/activity">@{{post.User.username}}</a>
                     </p>
                     {{#if edited}}
                     <p class="pl-3 is-6">Last Edited: {{format_date post.created_at}}</p>
